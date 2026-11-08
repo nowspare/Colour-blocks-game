@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a1a" />
+  <meta name="description" content="Colour Block — a beautiful, addictive block puzzle game." />
+  <title>Colour Block</title>
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/icons/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/menu.css" />
+  <link rel="stylesheet" href="css/game.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div id="app">
 
+    <!-- SPLASH -->
+    <section id="splash" class="screen active">
+      <div class="splash-logo" aria-hidden="true">
+        <span class="splash-block b1"></span>
+        <span class="splash-block b2"></span>
+        <span class="splash-block b3"></span>
+        <span class="splash-block b4"></span>
+      </div>
+      <h1 class="splash-title">COLOUR<br/>BLOCK</h1>
+      <div class="splash-bar"><span></span></div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" class="screen">
+      <div class="menu-bg" aria-hidden="true">
+        <span class="menu-orb o1"></span>
+        <span class="menu-orb o2"></span>
+        <span class="menu-orb o3"></span>
+        <span class="menu-orb o4"></span>
+      </div>
+      <div class="menu-inner">
+        <h1 class="menu-title">Colour Block</h1>
+        <p class="menu-sub">compose · clear · repeat</p>
+
+        <div class="menu-modes">
+          <button class="mode-btn" data-mode="classic">
+            <span class="mode-icon">◼</span>
+            <span class="mode-label">Classic</span>
+            <span class="mode-desc">no timer</span>
+          </button>
+          <button class="mode-btn" data-mode="endless">
+            <span class="mode-icon">∞</span>
+            <span class="mode-label">Endless</span>
+            <span class="mode-desc">keep going</span>
+          </button>
+          <button class="mode-btn" data-mode="time">
+            <span class="mode-icon">⏱</span>
+            <span class="mode-label">Time</span>
+            <span class="mode-desc">120 seconds</span>
+          </button>
+          <button class="mode-btn" data-mode="level">
+            <span class="mode-icon">★</span>
+            <span class="mode-label">Levels</span>
+            <span class="mode-desc">beat targets</span>
+          </button>
+          <button class="mode-btn" data-mode="daily">
+            <span class="mode-icon">☀</span>
+            <span class="mode-label">Daily</span>
+            <span class="mode-desc">shared seed</span>
+          </button>
+        </div>
+
+        <div class="menu-actions">
+          <button id="btn-settings" class="icon-btn" aria-label="Settings">⚙</button>
+          <button id="btn-stats" class="icon-btn" aria-label="Statistics">▤</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section id="game" class="screen">
+      <header class="game-header">
+        <button id="btn-pause" class="icon-btn" aria-label="Pause">❚❚</button>
+        <div class="score-block">
+          <span class="score-label">SCORE</span>
+          <span id="score" class="score-value">0</span>
+        </div>
+        <div class="score-block">
+          <span class="score-label">BEST</span>
+          <span id="best" class="score-value">0</span>
+        </div>
+        <div class="score-block mode-stat">
+          <span class="score-label" id="mode-stat-label">MODE</span>
+          <span id="mode-stat-value" class="score-value">—</span>
+        </div>
+      </header>
+
+      <main class="game-main">
+        <div id="board-wrap" class="board-wrap">
+          <div id="board" class="board" role="grid" aria-label="Game board"></div>
+          <div id="combo-popup" class="combo-popup" aria-live="polite"></div>
+        </div>
+
+        <div id="tray" class="tray" aria-label="Block tray">
+          <div class="tray-slot" data-slot="0"></div>
+          <div class="tray-slot" data-slot="1"></div>
+          <div class="tray-slot" data-slot="2"></div>
+        </div>
+      </main>
+
+      <footer class="game-footer">
+        <button id="btn-restart" class="icon-btn small" aria-label="Restart">↻</button>
+        <button id="btn-bomb" class="icon-btn small" aria-label="Skip blocks">💣 <span id="bomb-count">3</span></button>
+        <button id="btn-mute" class="icon-btn small" aria-label="Toggle sound">🔊</button>
+      </footer>
+    </section>
+
+    <!-- GAME OVER -->
+    <section id="gameover" class="screen overlay">
+      <div class="overlay-card">
+        <h2 class="overlay-title">Game Over</h2>
+        <div class="go-score">
+          <span class="score-label">SCORE</span>
+          <span id="go-score" class="go-value">0</span>
+        </div>
+        <div class="go-best">
+          <span>Best</span>
+          <span id="go-best">0</span>
+        </div>
+        <div class="overlay-actions">
+          <button id="btn-again" class="pill-btn primary">Play Again</button>
+          <button id="btn-menu" class="pill-btn">Menu</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAUSE -->
+    <section id="pause" class="screen overlay">
+      <div class="overlay-card">
+        <h2 class="overlay-title">Paused</h2>
+        <div class="overlay-actions">
+          <button id="btn-resume" class="pill-btn primary">Resume</button>
+          <button id="btn-pause-menu" class="pill-btn">Menu</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="settings" class="screen overlay">
+      <div class="overlay-card">
+        <h2 class="overlay-title">Settings</h2>
+        <div class="setting-row">
+          <label for="set-sound">Sound</label>
+          <input type="checkbox" id="set-sound" checked />
+        </div>
+        <div class="setting-row">
+          <label for="set-haptics">Haptics</label>
+          <input type="checkbox" id="set-haptics" checked />
+        </div>
+        <div class="setting-row">
+          <label for="set-gridlines">Grid lines</label>
+          <input type="checkbox" id="set-gridlines" checked />
+        </div>
+        <div class="overlay-actions">
+          <button id="btn-close-settings" class="pill-btn primary">Done</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section id="stats" class="screen overlay">
+      <div class="overlay-card">
+        <h2 class="overlay-title">Statistics</h2>
+        <div id="stats-body" class="stats-body"></div>
+        <div class="overlay-actions">
+          <button id="btn-close-stats" class="pill-btn primary">Done</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="drag-layer" class="drag-layer" aria-hidden="true"></div>
+  <div id="particles" class="particles" aria-hidden="true"></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
